@@ -31,12 +31,12 @@ are subject to Google's terms and regional support.
 ## Framework alternatives
 
 - This root project is the **Tauri** version.
-- [`versions/egui`](versions/egui) is an **egui** widget shell that opens YouTube Music in your browser.
-- [`versions/iced`](versions/iced) is an **Iced** widget shell that opens YouTube Music in your browser.
+- [`versions/egui`](versions/egui) embeds YouTube Music using Wry.
+- [`versions/iced`](versions/iced) embeds YouTube Music using `iced_wry`.
 
-The egui and Iced shells stay lighter because playback runs in your existing
-browser. The Tauri version embeds YouTube Music in the app window. The YouTube
-Music page itself remains the largest runtime cost in that version.
+All three versions load YouTube Music inside their app window using the system
+WebView. The page itself is the main runtime cost. Windows builds launch as GUI
+apps without opening a console window.
 
 ## Build on GitHub
 

@@ -1,3 +1,3 @@
 # Rustube · Iced edition
 
-Native Rust UI built with Iced. Run with `cargo run` from this directory. The button opens YouTube Music in your default browser; this app is a lightweight widget shell and does not embed a browser engine.
+Native Rust UI built with Iced and the `iced_wry` WebView integration. YouTube Music loads inside the app window. The header includes a compact, always-on-top widget toggle. On Windows, the release executable is a GUI app and does not open a console window.

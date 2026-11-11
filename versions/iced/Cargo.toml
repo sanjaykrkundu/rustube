@@ -5,7 +5,7 @@ edition = "2021"
 
 [dependencies]
 iced = { version = "0.14", default-features = false, features = ["tiny-skia", "thread-pool"] }
-webbrowser = "1"
+iced_wry = "0.1"
 
 [profile.release]
 strip = true

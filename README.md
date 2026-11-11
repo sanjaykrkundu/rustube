@@ -51,4 +51,5 @@ are subject to Google's terms and regional support.
 
 The workflow at `.github/workflows/build-windows.yml` builds the Tauri Windows
 installer and a portable ZIP with `rustube.exe` and its editable `minimal.js`.
-Push this project to GitHub, then run **Actions → Build Rustube (Windows)**.
+It caches Rust artifacts and the Tauri CLI to speed up repeat runs. Push this
+project to GitHub, then run **Actions → Build Rustube (Windows)**.

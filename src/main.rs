@@ -140,25 +140,26 @@ fn main() {
             })
             .build()?;
 
-            window.on_window_event(|window, event| match event {
+            let event_window = window.clone();
+            window.on_window_event(move |event| match event {
                 tauri::WindowEvent::CloseRequested { api, .. } => {
                     api.prevent_close();
-                    let _ = window.hide();
+                    let _ = event_window.hide();
                 }
                 tauri::WindowEvent::Resized(size) => {
                     // Windows may report a zero-sized client area during
                     // minimization before `is_minimized()` reflects the state.
                     if size.width == 0
                         || size.height == 0
-                        || window.is_minimized().unwrap_or(false)
+                        || event_window.is_minimized().unwrap_or(false)
                     {
-                        let _ = window.hide();
+                        let _ = event_window.hide();
                     }
                 }
                 tauri::WindowEvent::Focused(false)
-                    if window.is_minimized().unwrap_or(false) =>
+                    if event_window.is_minimized().unwrap_or(false) =>
                 {
-                    let _ = window.hide();
+                    let _ = event_window.hide();
                 }
                 _ => {}
             });

@@ -145,7 +145,19 @@ fn main() {
                     api.prevent_close();
                     let _ = window.hide();
                 }
-                tauri::WindowEvent::Resized(_) if window.is_minimized().unwrap_or(false) => {
+                tauri::WindowEvent::Resized(size) => {
+                    // Windows may report a zero-sized client area during
+                    // minimization before `is_minimized()` reflects the state.
+                    if size.width == 0
+                        || size.height == 0
+                        || window.is_minimized().unwrap_or(false)
+                    {
+                        let _ = window.hide();
+                    }
+                }
+                tauri::WindowEvent::Focused(false)
+                    if window.is_minimized().unwrap_or(false) =>
+                {
                     let _ = window.hide();
                 }
                 _ => {}

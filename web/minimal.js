@@ -53,31 +53,57 @@
     const host = document.createElement("div");
     host.id = "rustube-minimal-toggle-host";
     host.style.cssText =
-      "position:fixed;right:18px;bottom:18px;z-index:2147483647;";
+      "position:fixed;left:18px;top:18px;z-index:2147483647;isolation:isolate;";
 
     const shadow = host.attachShadow({ mode: "open" });
     shadow.innerHTML = `
       <style>
         button {
-          border: 1px solid rgba(255,255,255,.16);
+          display: flex;
+          align-items: center;
+          gap: 9px;
+          border: 1px solid rgba(255,255,255,.2);
           border-radius: 999px;
-          padding: 10px 14px;
-          background: rgba(24,24,27,.94);
-          color: #f4f4f5;
-          box-shadow: 0 4px 18px rgba(0,0,0,.28);
-          font: 600 12px/1.2 system-ui, sans-serif;
+          padding: 10px 13px;
+          background: #e11d48;
+          color: white;
+          box-shadow: 0 5px 20px rgba(0,0,0,.38);
+          font: 650 13px/1 system-ui, sans-serif;
           cursor: pointer;
         }
-        button:hover { background: #3f3f46; }
-        button:focus-visible { outline: 2px solid #f43f5e; outline-offset: 2px; }
+        button[data-enabled="false"] { background: rgba(24,24,27,.96); }
+        button:hover { filter: brightness(1.12); }
+        button:focus-visible { outline: 2px solid white; outline-offset: 3px; }
+        svg { width: 17px; height: 17px; flex: none; }
+        .state {
+          padding: 4px 6px;
+          border-radius: 999px;
+          background: rgba(0,0,0,.22);
+          font-size: 10px;
+          letter-spacing: .06em;
+        }
       </style>
-      <button type="button" aria-pressed="${minimal}"></button>
+      <button type="button" aria-pressed="${minimal}">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M4 7h6m4 0h6M4 17h2m4 0h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+          <circle cx="12" cy="7" r="2" fill="currentColor"/>
+          <circle cx="8" cy="17" r="2" fill="currentColor"/>
+        </svg>
+        <span>Minimal view</span>
+        <span class="state"></span>
+      </button>
     `;
 
     const button = shadow.querySelector("button");
+    const state = shadow.querySelector(".state");
     const updateButton = () => {
-      button.textContent = `Minimal view: ${minimal ? "On" : "Off"}`;
       button.setAttribute("aria-pressed", String(minimal));
+      button.setAttribute(
+        "aria-label",
+        `Turn minimal view ${minimal ? "off" : "on"}`,
+      );
+      button.dataset.enabled = String(minimal);
+      state.textContent = minimal ? "ON" : "OFF";
     };
     updateButton();
 
@@ -92,7 +118,7 @@
       updateButton();
     });
 
-    (document.body || document.documentElement).appendChild(host);
+    document.documentElement.appendChild(host);
   };
 
   install();

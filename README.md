@@ -1,18 +1,26 @@
 # Rustube
 
-A small native desktop window for YouTube Music, built with Rust and Tauri.
-The app opens the official YouTube Music site in a native WebView; sign-in,
-playlists, and playback are provided by YouTube Music itself.
+A lightweight desktop app for YouTube Music, built with Rust and Tauri. It loads
+the official YouTube Music website in the operating system's WebView, so sign-in,
+playlists, and playback use the site's own features.
+
+The app opens directly to your library. Minimal view starts on and hides the site
+logo, navigation rail, player UI, and video surface while keeping search,
+sign-in/account controls, and your library visible. Use the **Minimal view: On/Off**
+button in the lower-right corner to toggle it; your choice is saved in the app's
+YouTube Music WebView. Hiding the video surface does not guarantee that YouTube
+stops loading or decoding the media stream. These tweaks apply only on
+`music.youtube.com` inside this app.
 
 ## Widget mode
 
-Press **Ctrl+Shift+M** (or **Cmd+Shift+M** on macOS) to toggle a compact,
-always-on-top 360 × 180 window. Press the shortcut again to restore the full
-window. The same WebView stays open so playback continues through the resize.
+Press **Ctrl+Shift+M** (or **Cmd+Shift+M** on macOS) to switch between the normal
+window and a compact, always-on-top 360 × 180 widget. The same page remains open
+so playback continues while switching modes.
 
 ## Build
 
-Install the Rust toolchain and the [Tauri v2 prerequisites](https://tauri.app/start/prerequisites/),
+Install Rust and the [Tauri v2 prerequisites](https://v2.tauri.app/start/prerequisites/),
 then run:
 
 ```sh
@@ -28,18 +36,8 @@ cargo tauri build
 The app needs an internet connection. YouTube account features and availability
 are subject to Google's terms and regional support.
 
-## Framework alternatives
-
-- This root project is the **Tauri** version.
-- [`versions/egui`](versions/egui) embeds YouTube Music using Wry.
-- [`versions/iced`](versions/iced) embeds YouTube Music using `iced_wry`.
-
-All three versions load YouTube Music inside their app window using the system
-WebView. The page itself is the main runtime cost. Windows builds launch as GUI
-apps without opening a console window.
-
 ## Build on GitHub
 
-The workflow at `.github/workflows/build-windows.yml` builds all three Windows
-versions and uploads their outputs as downloadable workflow artifacts. Push
-this project to a GitHub repository, then run **Actions → Build Windows apps**.
+The workflow at `.github/workflows/build-windows.yml` builds the Tauri Windows
+installer and uploads it as a downloadable workflow artifact. Push this project
+to GitHub, then run **Actions → Build Rustube (Windows)**.

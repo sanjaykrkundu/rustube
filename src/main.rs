@@ -5,6 +5,7 @@ use tauri_plugin_global_shortcut::{GlobalShortcutExt, ShortcutState};
 
 const NORMAL_SIZE: (f64, f64) = (1100.0, 760.0);
 const WIDGET_SIZE: (f64, f64) = (360.0, 180.0);
+const PAGE_TWEAKS: &str = include_str!("../web/minimal.js");
 
 fn set_widget_mode(app: &tauri::AppHandle, enabled: bool) {
     if let Some(window) = app.get_webview_window("main") {
@@ -43,12 +44,13 @@ fn main() {
             let _window = WebviewWindowBuilder::new(
                 app,
                 "main",
-                WebviewUrl::External("https://music.youtube.com".parse()?),
+                WebviewUrl::External("https://music.youtube.com/library".parse()?),
             )
             .title("YouTube Music")
             .inner_size(NORMAL_SIZE.0, NORMAL_SIZE.1)
             .min_inner_size(700.0, 500.0)
             .center()
+            .initialization_script(PAGE_TWEAKS)
             .build()?;
 
             Ok(())

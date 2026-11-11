@@ -12,6 +12,17 @@ YouTube Music WebView. Hiding the video surface does not guarantee that YouTube
 stops loading or decoding the media stream. These tweaks apply only on
 `music.youtube.com` inside this app.
 
+Rustube stays available from the system tray. Left-click the tray icon to reopen
+the app; right-click for **Open YouTube Music** or **Quit Rustube**. Closing or
+minimizing the window sends it to the tray.
+
+## Edit the page tweaks without rebuilding
+
+The app reads `minimal.js` beside `rustube.exe` each time YouTube Music finishes
+loading. Edit that file, then refresh the page (Ctrl+R) to try the change. The
+GitHub Actions workflow provides a portable ZIP containing both files. The
+installer also includes a bundled fallback copy when no sidecar is present.
+
 ## Widget mode
 
 Press **Ctrl+Shift+M** (or **Cmd+Shift+M** on macOS) to switch between the normal
@@ -39,5 +50,5 @@ are subject to Google's terms and regional support.
 ## Build on GitHub
 
 The workflow at `.github/workflows/build-windows.yml` builds the Tauri Windows
-installer and uploads it as a downloadable workflow artifact. Push this project
-to GitHub, then run **Actions → Build Rustube (Windows)**.
+installer and a portable ZIP with `rustube.exe` and its editable `minimal.js`.
+Push this project to GitHub, then run **Actions → Build Rustube (Windows)**.

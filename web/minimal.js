@@ -4,8 +4,13 @@
 
   const STORAGE_KEY = "rustube:minimal-view";
   const enabledByDefault = true;
-  let minimal = window.localStorage.getItem(STORAGE_KEY);
-  minimal = minimal === null ? enabledByDefault : minimal === "true";
+  let minimal = enabledByDefault;
+  try {
+    const saved = window.localStorage.getItem(STORAGE_KEY);
+    if (saved !== null) minimal = saved === "true";
+  } catch (_) {
+    // Keep the default if browser storage is unavailable.
+  }
 
   const minimalStyle = document.createElement("style");
   minimalStyle.id = "rustube-minimal-view";
@@ -79,7 +84,11 @@
     button.addEventListener("click", () => {
       minimal = !minimal;
       minimalStyle.disabled = !minimal;
-      window.localStorage.setItem(STORAGE_KEY, String(minimal));
+      try {
+        window.localStorage.setItem(STORAGE_KEY, String(minimal));
+      } catch (_) {
+        // The current toggle still works even if this choice cannot be saved.
+      }
       updateButton();
     });
 
